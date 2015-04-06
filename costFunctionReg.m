@@ -19,15 +19,15 @@ grad = zeros(size(theta));
 
 adj = ones(size(theta));
 adj(1,1) = 0;
-one = ones(length(X),1);                            	% intialize one vector
-z = X*theta;											% formulate z
-h = one ./ (one + exp(-z));								% formulate hypothesis function
-reg = (lambda/2*m)*(adj.*theta)'*(adj.*theta);			% the regularization term
 
-J = (-1/m)*sum(y.*log(h) + (one-y).*log(one-h)) - reg;	% formulate cost function
+one = ones(length(X),1);                            		% intialize one vector
+z = X*theta;												% formulate z
+h = one ./ (one + exp(-z));									% formulate hypothesis function
+reg = (lambda*(theta.*theta).*adj)/(2*m);					% the regularization term
+
+J = (-1/m)*sum(y.*log(h) + (one-y).*log(one-h)) + sum(reg);	% formulate cost function
 grad = (1/m)* X'*(h-y) + (lambda/m)*adj.*theta;
 
-% J = (-1/m)*sum(y.*log(h) + (one-y).*log(one-h)) - reg;	% formulate cost function
 % =============================================================
 
 end
